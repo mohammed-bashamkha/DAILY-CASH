@@ -62,6 +62,36 @@
             </div>
         </div>
     </div>
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Total Workers -->
+        <div class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between border-r-4 border-blue-500">
+            <div>
+                <p class="text-sm text-gray-500 font-medium mb-1">عدد العمال</p>
+                <h3 class="text-2xl font-bold text-gray-800" dir="ltr">${{ number_format($cashbox->balance ?? 0, 2) }}</h3>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full text-blue-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Total Projects -->
+        <div class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between border-r-4 border-yellow-500">
+            <div>
+                <p class="text-sm text-gray-500 font-medium mb-1">عددالمشاريع</p>
+                <h3 class="text-2xl font-bold text-gray-800" dir="ltr">
+                    ${{ number_format(($cashbox->total_income ?? 0) - ($cashbox->total_expense ?? 0), 2) }}
+                </h3>
+            </div>
+            <div class="bg-yellow-100 p-3 rounded-full text-yellow-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
 
     <!-- Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
