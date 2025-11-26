@@ -2,62 +2,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|string|max:255|unique:users,email',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8|confirmed'
         ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        return response()->json([
-            'massage' => 'User Registered Successfuly',
-            'User' => $user,
-        ],201);
+
+        Auth::login($user);
+
+        return redirect('/dashboard');
     }
 
-    public function login(Request $request) {
-        $request->validate([
-            'email' => 'required|email|string|max:255',
+    public function showRegister()
+    {
+        return view('Auth.register');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
             'password' => 'required|string|min:8'
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'The provided credentials are incorrect.'], 401);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        return back()->withErrors([
+            'email' => 'بيانات الدخول غير صحيحة.',
+        ])->onlyInput('email');
+    }
 
-        return response()->json([
-            'message' => 'User Logged In Successfully',
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-            'user_email' => $user->email,
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ], 200);
+    public function showLogin()
+    {
+        return view('Auth.login');
     }
 
     public function logout(Request $request)
-{
-    $user = $request->user();
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    if ($user && $user->currentAccessToken()) {
-        $user->currentAccessToken()->delete();
-        return response()->json(['message' => 'logged out successfully'], 200);
-    }
-
-    return response()->json(['message' => 'The currentAccessToken is Undefiend'], 401);
+        return redirect('/login');
     }
 
     public function deleteMyAccount(Request $request) {
