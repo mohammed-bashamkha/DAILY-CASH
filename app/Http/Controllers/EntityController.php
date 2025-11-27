@@ -15,7 +15,8 @@ class EntityController extends Controller
 
     public function create() 
     {
-        return view('entities.create');
+        $type = Entity::get('type');
+        return view('entities.create',compact('type'));
     }
 
     public function store(Request $request) {

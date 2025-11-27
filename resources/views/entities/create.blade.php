@@ -25,7 +25,7 @@
 
             <div class="mb-4">
                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف</label>
-                <input type="text" name="phone" id="phone" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                <input type="number" name="phone" id="phone" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="الرقم مطلوب للعامل">
             </div>
 
             <div class="mb-6">

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-8 flex justify-between items-center">
+    <div class="mb-6 flex justify-between items-center">
         <h2 class="text-2xl font-bold text-gray-800">لوحة التحكم المالية</h2>
         <div class="text-sm text-gray-500">الرئيسية / لوحة التحكم</div>
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <!-- Cashbox Balance -->
         <div class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between border-r-4 border-blue-500">
             <div>
@@ -63,12 +63,12 @@
         </div>
     </div>
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
         <!-- Total Workers -->
         <div class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between border-r-4 border-blue-500">
             <div>
                 <p class="text-sm text-gray-500 font-medium mb-1">عدد العمال</p>
-                <h3 class="text-2xl font-bold text-gray-800" dir="ltr">${{ number_format($cashbox->balance ?? 0, 2) }}</h3>
+                <h3 class="text-2xl font-bold text-gray-800" dir="ltr">{{ $totalWorkers ?? 0 }}</h3>
             </div>
             <div class="bg-blue-100 p-3 rounded-full text-blue-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -82,7 +82,7 @@
             <div>
                 <p class="text-sm text-gray-500 font-medium mb-1">عددالمشاريع</p>
                 <h3 class="text-2xl font-bold text-gray-800" dir="ltr">
-                    ${{ number_format(($cashbox->total_income ?? 0) - ($cashbox->total_expense ?? 0), 2) }}
+                    {{ $totalProjects ?? 0 }}
                 </h3>
             </div>
             <div class="bg-yellow-100 p-3 rounded-full text-yellow-600">
