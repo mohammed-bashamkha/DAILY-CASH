@@ -2,7 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>كشف حساب</title>
+    <title>كشف حساب القيود المحاسبية</title>
+
     <style>
         /* خطوط وألوان عامة */
         body {
@@ -142,75 +143,102 @@
 </head>
 
 <body>
-    <div class="container">
+<div class="container">
 
-        <!-- Header -->
-        <div class="header">
-            <div class="text">
-                <h2>كشف حساب</h2>
-                @if ($entity->type == 'worker')
-                    <p>أسم العامل: {{ $entity->name }}</p>
-                @else
-                    <p>أسم المشروع: {{ $entity->name }}</p>
-                @endif
-            </div>
-            <div class="company">
-                <h2>Daily Cash</h2>
-            </div>
+    <!-- Header -->
+    <div class="header">
+        <div class="text">
+            <h2>كشف حساب للقيود</h2>
+
+            @if ($entity->type == 'worker')
+                <p>اسم العامل: {{ $entity->name }}</p>
+            @else
+                <p>اسم المشروع: {{ $entity->name }}</p>
+            @endif
         </div>
 
-        <!-- Cards -->
-        <div class="cards">
-            <div class="card green">
-                <p class="title">إجمالي لكم</p>
-                <p class="amount">{{ number_format($total_income, 2) }} ريال</p>
-            </div>
+        <div class="company">
+            <h2>Daily Cash</h2>
+        </div>
+    </div>
 
-            <div class="card red">
-                <p class="title">إجمالي عليكم</p>
-                <p class="amount">{{ number_format($total_expense, 2) }} ريال</p>
-            </div>
-
-            <div class="card blue">
-                <p class="title">الرصيد المتبقي</p>
-                <p class="amount">{{ number_format($balance, 2) }} ريال</p>
-            </div>
+    <!-- Cards -->
+    <div class="cards">
+        <div class="card green">
+            <p class="title">إجمالي مدين</p>
+            <p class="amount">{{ number_format($total_debit, 2) }} ريال</p>
         </div>
 
-        <!-- Table -->
-        <h3 style="margin-bottom: 10px; direction: rtl;">تفاصيل العمليات</h3>
-        <table>
-            <thead>
+        <div class="card red">
+            <p class="title">إجمالي دائن</p>
+            <p class="amount">{{ number_format($total_credit, 2) }} ريال</p>
+        </div>
+
+        <div class="card blue">
+            <p class="title">الرصيد</p>
+            <p class="amount">{{ number_format($balance, 2) }} ريال</p>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <h3 style="margin-bottom: 10px; direction: rtl;">تفاصيل القيود</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>التاريخ</th>
+                <th>العملية</th>
+                <th>مدين</th>
+                <th>دائن</th>
+                <th>المبلغ</th>
+                <th>الوصف</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach ($entries as $e)
                 <tr>
-                    <th>التاريخ</th>
-                    <th>النوع</th>
-                    <th>المبلغ</th>
-                    <th>الوصف</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($transactions as $t)
-                <tr>
-                    <td>{{ $t->date }}</td>
+                    <td>{{ $e->date }}</td>
+
+                    <!-- تحديد نوع القيد بالنسبة للكيان -->
                     <td>
-                        @if($t->type === 'income')
-                            <span class="green">لكم</span>
+                        @if ($e->debit_entity_id == $entity->id)
+                            <span class="green">مدين</span>
                         @else
-                            <span class="red">عليكم</span>
+                            <span class="red">دائن</span>
                         @endif
                     </td>
-                    <td>{{ number_format($t->amount, 2) }}</td>
-                    <td>{{ $t->description ?? '-' }}</td>
+
+                    <!-- مدين -->
+                    <td>
+                        @if ($e->debit_entity_id == $entity->id)
+                            {{ number_format($e->amount, 2) }}
+                        @else
+                            -
+                        @endif
+                    </td>
+
+                    <!-- دائن -->
+                    <td>
+                        @if ($e->credit_entity_id == $entity->id)
+                            {{ number_format($e->amount, 2) }}
+                        @else
+                            -
+                        @endif
+                    </td>
+
+                    <td>{{ number_format($e->amount, 2) }}</td>
+                    <td>{{ $e->description ?? '-' }}</td>
                 </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
 
-        <!-- Footer -->
-        <div class="footer">
-            تم إنشاء كشف الحساب بواسطة نظام إدارة النقدية
-        </div>
-
+    <!-- Footer -->
+    <div class="footer">
+        تم إنشاء كشف الحساب بواسطة نظام إدارة النقدية
     </div>
+
+</div>
 </body>
 </html>

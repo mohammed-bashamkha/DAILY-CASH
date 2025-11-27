@@ -58,8 +58,8 @@
 
             <!-- Statements -->
             <li>
-                <a href="{{ route('Statements.index') }}" 
-                class="flex items-center px-6 py-3 hover:bg-[#2b2b40] transition-colors 
+                <a href="{{ route('Statements.index') }}"
+                class="flex items-center px-6 py-3 hover:bg-[#2b2b40] transition-colors
                 {{ request()->routeIs('Statements.*') ? 'bg-blue-600 border-l-4 border-blue-400' : 'text-gray-300 hover:text-white' }}">
 
                     <!-- New icon (document/report) -->

@@ -1,9 +1,9 @@
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Daily Cash') }}</title>
+    <title>{{ $title ?? config('app.name', 'Daily Cash') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,31 +24,19 @@
 </head>
 <body class="bg-gray-100 text-gray-900 antialiased">
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        @include('includes.sidebar')
+        <!-- Sidebar Component -->
+        <x-sidebar />
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col mr-64 transition-all duration-300">
-            <!-- Header -->
-            @include('includes.header')
+            <!-- Header Component -->
+            <x-header :title="$title" />
 
             <!-- Page Content -->
             <main class="p-6 flex-1 overflow-y-auto">
-                @yield('content')
+                {{ $slot }}
             </main>
         </div>
     </div>
 </body>
-</html> --}}
-<x-app-layout>
-    <x-slot name="header">
-        <x-header />
-    </x-slot>
-
-    <x-slot name="sidebar">
-        <x-sidebar />
-    </x-slot>
-
-    <!-- محتوى الصفحة -->
-    {{ $slot }}
-</x-app-layout>
+</html>

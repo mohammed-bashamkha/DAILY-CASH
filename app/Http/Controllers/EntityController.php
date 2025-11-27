@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class EntityController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $entities = Auth::user()->entities;
         return view('entities.index', compact('entities'));
     }
 
-    public function create() 
+    public function create()
     {
         $type = Entity::get('type');
         return view('entities.create',compact('type'));

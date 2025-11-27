@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CashBoxController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\RevenuesExpensesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JourbalEntryController;
+use App\Http\Controllers\StatementsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +22,22 @@ Route::post('/register', [UserController::class, 'register']);
 Route::middleware('auth')->group(function () {
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Statements Routes
+    Route::get('/statements', [StatementsController::class, 'index'])->name('Statements.index');
+    // select Entity for Statement
+    Route::get('/statements/entities', [StatementsController::class, 'selectEntity'])
+    ->name('statements.entities.form');
+    // generate Entity Statement PDF
+    Route::get('/statements/entity/{id}', [StatementsController::class, 'getEntityStatement'])
+    ->name('statements.entities.generate');
+
+    // select Entity for Journal Entry Statement
+    Route::get('/statements/journal', [StatementsController::class, 'selectEntityForJournal'])
+    ->name('journal.statement.form');
+    Route::get('/statements/journal/{id}', [StatementsController::class, 'getJourbalEntryStatement'])
+    ->name('journal.statement.generate');
+
 
     // Revenues Routes
     Route::get('revenues', [RevenuesExpensesController::class, 'indexRevenues'])->name('revenues.index');

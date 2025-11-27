@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout title="أنشاء كيان">
     <div class="mb-8">
         <h2 class="text-2xl font-bold text-gray-800">إضافة كيان جديد</h2>
         <div class="text-sm text-gray-500">الرئيسية / الكيانات / إضافة</div>
@@ -9,7 +7,7 @@
     <div class="bg-white rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
         <form action="{{ route('entities.store') }}" method="POST">
             @csrf
-            
+
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-1">الاسم</label>
                 <input type="text" name="name" id="name" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" required>
@@ -39,4 +37,4 @@
             </div>
         </form>
     </div>
-@endsection
+</x-app-layout>

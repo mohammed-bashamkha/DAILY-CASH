@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout title="إضافة قيد محاسبي جديد">
     <div class="mb-8">
         <h2 class="text-2xl font-bold text-gray-800">إضافة قيد محاسبي جديد</h2>
         <div class="text-sm text-gray-500">الرئيسية / القيود اليومية / إضافة</div>
@@ -9,7 +7,7 @@
     <div class="bg-white rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
         <form action="{{ route('journal-entries.store') }}" method="POST">
             @csrf
-            
+
             <div class="mb-4">
                 <label for="date" class="block text-sm font-medium text-gray-700 mb-1">التاريخ</label>
                 <input type="date" name="date" id="date" value="{{ date('Y-m-d') }}" class="w-full rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" required>
@@ -52,4 +50,4 @@
             </div>
         </form>
     </div>
-@endsection
+</x-app-layout>

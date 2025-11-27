@@ -10,9 +10,10 @@ class CashBoxController extends Controller
 {
     public function index()
     {
-        $cash = Cashbox::all();
-        return response()->json($cash);
+        $cashbox = Cashbox::firstOrNew();
+        return view('cashbox.index', compact('cashbox'));
     }
+
 
     public function store(Request $request)
     {

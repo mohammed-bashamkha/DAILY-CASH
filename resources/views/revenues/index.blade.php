@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout title="الإيرادات">
     <div class="mb-8 flex justify-between items-center">
         <div>
             <h2 class="text-2xl font-bold text-gray-800">الإيرادات</h2>
@@ -57,4 +55,4 @@
             </table>
         </div>
     </div>
-@endsection
+</x-app-layout>
