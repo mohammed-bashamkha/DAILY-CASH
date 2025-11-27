@@ -48,7 +48,7 @@
 
             <!-- Journal Entries -->
             <li>
-                <a href="{{-- route('journal-entries.index') --}}" class="flex items-center px-6 py-3 hover:bg-[#2b2b40] transition-colors {{ request()->routeIs('journal-entries.*') ? 'bg-blue-600 border-l-4 border-blue-400' : 'text-gray-300 hover:text-white' }}">
+                <a href="{{ route('journal-entries.index') }}" class="flex items-center px-6 py-3 hover:bg-[#2b2b40] transition-colors {{ request()->routeIs('journal-entries.*') ? 'bg-blue-600 border-l-4 border-blue-400' : 'text-gray-300 hover:text-white' }}">
                     <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>

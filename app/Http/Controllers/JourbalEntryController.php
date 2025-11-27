@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class JourbalEntryController extends Controller
 {
     public function index() {
-        $user = Auth::user()->jourbalEntries;
-        return response()->json($user);
+        $entries = Auth::user()->jourbalEntries;
+        return view('journal_entries.index', compact('entries'));
     }
+
+    public function create()
+    {
+        $entities = Auth::user()->entities;
+        return view('journal_entries.create', compact('entities'));
+    }
+
 
     public function store(Request $request) {
         $user_id = Auth::user()->id;
@@ -28,22 +35,22 @@ class JourbalEntryController extends Controller
         $data['user_id'] = $user_id;
 
         // Create the journal entry
-        $entry = JourbalEntry::create($data);
+        // $entry = JourbalEntry::create($data);
+        // return response()->json($entry, 201);
+        JourbalEntry::create($data);
+        return redirect()->route('journal-entries.index')->with('success', 'تم إضافة القيد بنجاح');
 
-        return response()->json($entry, 201);
     }
 
     public function update(Request $request, $id)
     {
         $user = Auth::user();
-        $entry = JourbalEntry::findOrFail($id);
+        $entry = JourbalEntry::find($id);
 
-        // التحقق من صلاحية المستخدم
         if ($entry->user_id !== $user->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            abort(403, 'غير مصرح لك بتعديل هذا القيد');
         }
 
-        // التحقق من البيانات
         $data = $request->validate([
             'date' => 'sometimes|date',
             'amount' => 'sometimes|numeric',
@@ -53,10 +60,8 @@ class JourbalEntryController extends Controller
             'revenue_expense_id' => 'sometimes|nullable|exists:revenues_expenses,id',
         ]);
 
-        // تعديل user_id
         $data['user_id'] = $user->id;
 
-        // تحديث السجل
         $entry->update($data);
 
         return response()->json($entry, 200);
@@ -72,13 +77,13 @@ class JourbalEntryController extends Controller
     }
 
     public function destroy($id) {
-        $user = Auth::user();
-        $entry = JourbalEntry::findOrFail($id);
+        $user = Auth::user()->id;
+        $entry = JourbalEntry::find($id);
         if ($entry->user_id !== $user->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            abort(403, 'غير مصرح لك بحذف هذا القيد');
         }
         $entry->delete();
-        return response()->json(['message' => 'Journal entry deleted successfully'], 200);
+        return redirect()->route('journal-entries.index')->with('success', 'تم حذف القيد بنجاح');
     }
 
     public function journalEntrySearch(Request $request)

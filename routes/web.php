@@ -1,12 +1,14 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\RevenuesExpensesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\JourbalEntryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 // Authentication Routes
@@ -17,11 +19,12 @@ Route::post('/register', [UserController::class, 'register']);
 
 Route::middleware('auth')->group(function () {
     // Dashboard Route
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'workersProjectsStats']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Entity Routes
     Route::resource('entities', EntityController::class)->names('entities');
     Route::get('/entity-statment/{entity_id}', [RevenuesExpensesController::class, 'getEntityStatement'])->name('entity-statement');
+        // Journal Entries Routes
+    Route::resource('journal-entries', JourbalEntryController::class);
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 });
