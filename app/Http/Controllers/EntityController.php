@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEntityRequest;
 use App\Models\Entity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,19 +21,12 @@ class EntityController extends Controller
         return view('entities.create',compact('type'));
     }
 
-    public function store(Request $request) {
+    public function store(StoreEntityRequest $request) {
         $user_id = Auth::user()->id;
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:worker,project',
-            'phone' => 'nullable|string',
-            'notes' => 'nullable|string',
-        ]);
+        $data = $request->validated();
         $data['user_id'] = $user_id;
 
-        // $entity = Entity::create($data);
         Entity::create($data);
-        // return response()->json($entity, 201);
         return redirect()->route('entities.index')->with('success', 'تم إنشاء الكيان بنجاح');
     }
 
@@ -52,14 +46,8 @@ class EntityController extends Controller
         if ($entity->user_id !== $user_id) {
             abort(403,'غير مصرح لك بالتعديل هذا الكيان');
         }
-        $data = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'type' => 'sometimes|required|in:worker,project',
-            'phone' => 'nullable|string',
-            'notes' => 'nullable|string',
-        ]);
-        // $entity->update($data);
-        // return response()->json($entity);
+        $data = $request->validated();
+
         $entity->update($data);
         return redirect()->route('entities.index')->with('success', 'تم تحديث الكيان بنجاح');
 
