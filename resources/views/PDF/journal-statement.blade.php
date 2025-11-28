@@ -175,7 +175,7 @@
         </div>
 
         <div class="card blue">
-            <p class="title">الرصيد</p>
+            <p class="title">المتبقي</p>
             <p class="amount">{{ number_format($balance, 2) }} ريال</p>
         </div>
     </div>

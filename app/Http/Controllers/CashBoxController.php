@@ -10,7 +10,7 @@ class CashBoxController extends Controller
 {
     public function index()
     {
-        $cashbox = Cashbox::firstOrNew();
+        $cashbox = Auth::user()->cashbox;
         return view('cashbox.index', compact('cashbox'));
     }
 

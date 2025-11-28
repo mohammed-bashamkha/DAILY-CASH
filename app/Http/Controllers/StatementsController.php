@@ -91,7 +91,7 @@ class StatementsController extends Controller
     {
         $entities = Auth::user()->entities;
 
-        return view('statements.select-entity', compact('entities'));
+        return view('statements.entity-select', compact('entities'));
     }
 
     public function selectEntityForJournal()

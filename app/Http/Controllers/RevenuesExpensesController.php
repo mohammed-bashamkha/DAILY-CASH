@@ -18,7 +18,7 @@ class RevenuesExpensesController extends Controller
             ->where('type', 'income')
             ->with('entity')
             ->latest('date')
-            ->get();
+            ->paginate(5);
         return view('revenues.index', compact('revenues'));
     }
 
@@ -61,7 +61,7 @@ class RevenuesExpensesController extends Controller
             ->where('type', 'expense')
             ->with('entity')
             ->latest('date')
-            ->get();
+            ->paginate(5);
         return view('expenses.index', compact('expenses'));
     }
 

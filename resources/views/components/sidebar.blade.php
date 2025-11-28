@@ -73,6 +73,20 @@
                     الكشوفات
                 </a>
             </li>
+            <li>
+                <a href="{{ route('about') }}"
+                class="flex items-center px-6 py-3 hover:bg-[#2b2b40] transition-colors
+                {{ request()->routeIs('about') ? 'bg-blue-600 border-l-4 border-blue-400' : 'text-gray-300 hover:text-white' }}">
+
+                    <!-- New icon (document/report) -->
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 110 20 10 10 0 010-20z" />
+                    </svg>
+
+                    عنا
+                </a>
+            </li>
         </ul>
     </nav>
 </aside>

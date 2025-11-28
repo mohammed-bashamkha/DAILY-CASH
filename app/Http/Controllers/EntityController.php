@@ -12,7 +12,8 @@ class EntityController extends Controller
     public function index()
     {
         $entities = Auth::user()->entities;
-        return view('entities.index', compact('entities'));
+        $page = Entity::where('user_id',Auth::id())->paginate(5);
+        return view('entities.index', compact('entities','page'));
     }
 
     public function create()

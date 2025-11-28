@@ -55,5 +55,9 @@
                 </tbody>
             </table>
         </div>
+        <!-- الباجينيشن -->
+    <div class="mt-6">
+        {{ $page->links() }}
+    </div>
     </div>
 </x-app-layout>

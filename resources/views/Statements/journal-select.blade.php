@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout title="كشف حساب القيود">
     <div class="mb-8">
         <h2 class="text-2xl font-bold text-gray-800">كشف حساب القيود المحاسبية</h2>
         <div class="text-sm text-gray-500">الرئيسية / الكشوفات / كشف حساب القيود</div>
@@ -18,7 +16,11 @@
                         class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                     <option disabled selected>اختر الكيان...</option>
                     @foreach($entities as $entity)
-                        <option value="{{ $entity->id }}">{{ $entity->name }}</option>
+                        @if ($entity->type == 'project' )
+                        <option value="{{ $entity->id }}">{{ $entity->name }} (مشروع) </option>
+                        @else
+                        <option value="{{ $entity->id }}">{{ $entity->name }} (عامل) </option>  
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -44,4 +46,4 @@
             window.location.href = "/statements/journal/" + id;
         }
     </script>
-@endsection
+</x-app-layout>

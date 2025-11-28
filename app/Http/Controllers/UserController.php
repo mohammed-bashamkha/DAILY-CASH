@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditMyAccountRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -73,5 +74,46 @@ class UserController extends Controller
         }
 
         return response()->json(['message' => 'User not found'], 404);
+    }
+
+    public function updateMyAccount(EditMyAccountRequest $request) {
+        $user = $request->user();
+        if($user->id !== Auth::user()->id){
+            return back()->withErrors(['message' => 'غير مصرح لك بتعديل هذا الحساب'])->onlyInput('id');
+        }
+
+        $data = $request->validated();
+
+        if ($user) {
+            if ($request->has('name')) {
+                $user->name = $request->name;
+            }
+            if ($request->has('email')) {
+                $user->email = $request->email;
+            }
+            if ($request->has('password')) {
+                $user->password = Hash::make($request->password);
+            }
+            if($request->hasFile('profile_picture')) {
+                $path = $request->file('profile_picture')->store('Images','public');
+                $user->profile_picture = $path;
+            }
+            $user->save();
+
+            return redirect()->route('account.show')->with('success', 'تم تحديث الحساب بنجاح.');
+        }
+
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    public function showMyAccount(Request $request) {
+        $user = $request->user();
+        return view('account.show', compact('user'));
+    }
+
+    public function editMyAccount()
+    {
+        $user = Auth::user();
+        return view('account.edit',compact('user'));
     }
 }

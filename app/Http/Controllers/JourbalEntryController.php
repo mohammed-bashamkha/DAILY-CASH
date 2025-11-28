@@ -10,7 +10,8 @@ class JourbalEntryController extends Controller
 {
     public function index() {
         $entries = Auth::user()->jourbalEntries;
-        return view('journal_entries.index', compact('entries'));
+        $page = JourbalEntry::where('user_id',Auth::id())->paginate(5);
+        return view('journal_entries.index', compact('entries','page'));
     }
 
     public function create()

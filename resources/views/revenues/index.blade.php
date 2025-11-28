@@ -54,5 +54,9 @@
                 </tbody>
             </table>
         </div>
+        <!-- الباجينيشن -->
+        <div class="mt-6">
+            {{ $revenues->links() }}
+        </div>
     </div>
 </x-app-layout>

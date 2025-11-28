@@ -55,4 +55,8 @@
             </table>
         </div>
     </div>
+    <!-- الباجينيشن -->
+    <div class="mt-6">
+        {{ $expenses->links() }}
+    </div>
 </x-app-layout>

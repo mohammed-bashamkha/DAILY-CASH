@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout title="الكشوفات">
     <div class="mb-8">
         <h2 class="text-2xl font-bold text-gray-800">الكشوفات</h2>
         <div class="text-sm text-gray-500">الرئيسية / الكشوفات</div>
@@ -48,4 +46,4 @@
         </a>
 
     </div>
-@endsection
+</x-app-layout>

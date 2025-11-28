@@ -11,6 +11,7 @@
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-1">الاسم</label>
                 <input type="text" name="name" id="name" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" required>
+                @error('Name') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-4">
@@ -19,16 +20,19 @@
                     <option value="worker">عامل</option>
                     <option value="project">مشروع</option>
                 </select>
+                @error('type') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-4">
                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف</label>
                 <input type="number" name="phone" id="phone" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="الرقم مطلوب للعامل">
+                @error('phone') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">
                 <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">ملاحظات</label>
                 <textarea name="notes" id="notes" rows="3" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"></textarea>
+                @error('notes') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
             <div class="flex justify-end">

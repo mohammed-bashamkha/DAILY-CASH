@@ -23,6 +23,11 @@ Route::middleware('auth')->group(function () {
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // My Account Routes
+    Route::get('/my-account', [UserController::class, 'showMyAccount'])->name('account.show');
+    Route::get('/my-account/edit', [UserController::class, 'editMyAccount'])->name('account.edit');
+    Route::put('/my-account/update', [UserController::class, 'updateMyAccount'])->name('account.update');
+
     // Statements Routes
     Route::get('/statements', [StatementsController::class, 'index'])->name('Statements.index');
     // select Entity for Statement
@@ -62,5 +67,11 @@ Route::middleware('auth')->group(function () {
 
     // Journal Entries Routes
     Route::resource('journal-entries', JourbalEntryController::class);
+
+    // About Route
+    Route::get('/about', function () {
+    return view('about');
+    })->name('about');
+
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 });
