@@ -173,11 +173,6 @@
             <p class="title">إجمالي دائن</p>
             <p class="amount">{{ number_format($total_credit, 2) }} ريال</p>
         </div>
-
-        <div class="card blue">
-            <p class="title">المتبقي</p>
-            <p class="amount">{{ number_format($balance, 2) }} ريال</p>
-        </div>
     </div>
 
     <!-- Table -->

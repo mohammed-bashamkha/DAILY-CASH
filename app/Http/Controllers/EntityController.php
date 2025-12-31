@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEntityRequest;
+use App\Http\Requests\UpdateEntityRequest;
 use App\Models\Entity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,7 @@ class EntityController extends Controller
     }
 
 
-    public function update(Request $request, $id) {
+    public function update(UpdateEntityRequest $request, $id) {
         $user_id = Auth::user()->id;
         $entity = Entity::find($id);
         if ($entity->user_id !== $user_id) {

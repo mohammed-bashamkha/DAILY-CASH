@@ -34,7 +34,7 @@ class CashBoxController extends Controller
 
         // إنشاء الصندوق وربطه بالمستخدم
         $cashbox = Cashbox::create([
-            'user_id' => $user->id,
+            'user_id' => Auth::id(),
             'total_income' => 0,
             'total_expense' => 0,
             'balance' => $data['balance'],

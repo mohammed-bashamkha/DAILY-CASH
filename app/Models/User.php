@@ -71,6 +71,6 @@ class User extends Authenticatable
 
     public function cashbox()
     {
-        return $this->hasOne(Cashbox::class);
+        return $this->hasOne(Cashbox::class,'user_id');
     }
 }

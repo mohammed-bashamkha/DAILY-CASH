@@ -19,9 +19,19 @@ class Cashbox extends Model
     /**
      * تحديث الرصيد بناءً على نوع العملية
      */
-    public static function updateBalance($type, $amount)
+    public static function updateBalance($type, $amount,$userId)
     {
-        $cashbox = self::first() ?? self::create();
+        $cashbox = self::where('user_id', $userId)->first();
+
+        // إذا لم يوجد صندوق، إنشئه
+        if (!$cashbox) {
+            $cashbox = self::create([
+                'user_id' => $userId,
+                'total_income' => 0,
+                'total_expense' => 0,
+                'balance' => 0,
+            ]);
+        }
 
         if ($type === 'income') {
             $cashbox->increment('total_income', $amount);
@@ -33,6 +43,6 @@ class Cashbox extends Model
         $cashbox->save();
     }
     public function user() {
-        $this->belongsTo('users');
+       return $this->belongsTo(User::class, 'user_id');
     }
 }
